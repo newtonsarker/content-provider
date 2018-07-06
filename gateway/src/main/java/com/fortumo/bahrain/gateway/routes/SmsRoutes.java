@@ -13,7 +13,7 @@ public class SmsRoutes {
             notification = request.getPaymentNotification(exchange);
             Exchange.body().sendText(exchange, 200, "OK");
         } catch (Exception e) {
-            Exchange.body().sendText(exchange, 500, "OK");
+            Exchange.body().sendText(exchange, 500, "Bad Request!");
         }
     }
 
