@@ -1,4 +1,4 @@
-package com.fortumo.bahrain.gateway.http;
+package com.fortumo.bahrain.gateway.http.exchange;
 
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;

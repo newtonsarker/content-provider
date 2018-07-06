@@ -1,4 +1,4 @@
-package com.fortumo.bahrain.gateway.http;
+package com.fortumo.bahrain.gateway.routes;
 
 import java.time.LocalDateTime;
 

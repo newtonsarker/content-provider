@@ -1,5 +1,6 @@
-package com.fortumo.bahrain.gateway.http;
+package com.fortumo.bahrain.gateway.routes;
 
+import com.fortumo.bahrain.gateway.http.exchange.Exchange;
 import io.undertow.server.HttpServerExchange;
 
 public class SmsRoutes {
