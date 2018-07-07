@@ -19,10 +19,7 @@ public interface QueryParams {
     }
 
     default Optional<LocalDateTime> queryParamAsLocalDateTime(HttpServerExchange exchange, String name) {
-        return queryParam(exchange, name).map(dateStr -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            return LocalDateTime.parse(dateStr, formatter);
-        });
+        return queryParam(exchange, name).map(dateStr -> LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 
 }
