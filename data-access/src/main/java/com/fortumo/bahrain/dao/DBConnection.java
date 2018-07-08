@@ -23,7 +23,7 @@ public class DBConnection {
         try {
             DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS PaymentNotification ( PaymentNotificationID IDENTITY PRIMARY KEY, MessageID VARCHAR(50) NULL, Operator VARCHAR(50) NULL, Receiver INT NULL, Sender VARCHAR(50) NULL, Text VARCHAR(50) NULL, MsgTime TIMESTAMP NULL, IsProcessed BOOLEAN NULL )");
             DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentRequest ( RequestID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, Keyword VARCHAR(50) NULL, Message VARCHAR(50) NULL )");
-            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentResponse ( ResponseID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, StatusCode INT NULL, ResponseText VARCHAR(200) NULL, Receiver VARCHAR(50) NULL, Operator VARCHAR(50) NULL, IsDelivered BOOLEAN NULL )");
+            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentResponse ( ResponseID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, StatusCode INT NULL, ResponseText VARCHAR(200) NULL, Receiver VARCHAR(50) NULL, Operator VARCHAR(50) NULL, IsDelivered BOOLEAN NULL, DeliveredMessage VARCHAR(200) NULL )");
         } catch (Exception e) {
 
         }

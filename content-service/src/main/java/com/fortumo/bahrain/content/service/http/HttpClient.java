@@ -31,11 +31,6 @@ public class HttpClient {
         httpPost.setHeader("Accept", "application/json; charset=utf-8");
         httpPost.setHeader("Content-type", "application/json; charset=utf-8");
 
-        if(request.isAuthRequired()) {
-            UsernamePasswordCredentials creds = new UsernamePasswordCredentials(request.getUsername(), request.getPassword());
-            httpPost.addHeader(new BasicScheme().authenticate(creds, httpPost, null));
-        }
-
         CloseableHttpResponse response = client.execute(httpPost);
         HttpResponse httpResponse = new HttpResponse();
         httpResponse.setStatusCode(response.getStatusLine().getStatusCode());

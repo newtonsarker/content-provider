@@ -1,7 +1,5 @@
 package com.fortumo.bahrain.content.service.http;
 
-
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class SmsMessagePayload {
@@ -11,16 +9,32 @@ public class SmsMessagePayload {
     private String receiver;
     private String operator;
 
+    public String getMessage() {
+        return message;
+    }
+
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getMessageID() {
+        return messageID;
     }
 
     public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
 
+    public String getReceiver() {
+        return receiver;
+    }
+
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getOperator() {
+        return operator;
     }
 
     public void setOperator(String operator) {

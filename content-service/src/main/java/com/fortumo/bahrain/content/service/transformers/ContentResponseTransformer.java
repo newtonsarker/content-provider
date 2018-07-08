@@ -48,6 +48,7 @@ public class ContentResponseTransformer {
         message.setUsername("fortumo");
         message.setPassword("topsecret");
         message.setPayload(payload.toQueryParameter());
+        message.setContentMessage(payload.getMessage());
 
         return message;
     }

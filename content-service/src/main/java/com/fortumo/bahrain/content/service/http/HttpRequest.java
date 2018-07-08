@@ -4,9 +4,9 @@ public class HttpRequest {
 
     private String serviceURL;
     private String payload;
-    private boolean authRequired = Boolean.FALSE;
     private String username;
     private String password;
+    private String contentMessage;
 
     public String getServiceURL() {
         return serviceURL;
@@ -24,14 +24,6 @@ public class HttpRequest {
         this.payload = payload;
     }
 
-    public boolean isAuthRequired() {
-        return authRequired;
-    }
-
-    public void setAuthRequired(boolean authRequired) {
-        this.authRequired = authRequired;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -46,5 +38,13 @@ public class HttpRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getContentMessage() {
+        return contentMessage;
+    }
+
+    public void setContentMessage(String contentMessage) {
+        this.contentMessage = contentMessage;
     }
 }
