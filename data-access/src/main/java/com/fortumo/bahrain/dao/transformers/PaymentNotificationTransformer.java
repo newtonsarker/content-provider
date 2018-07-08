@@ -2,8 +2,6 @@ package com.fortumo.bahrain.dao.transformers;
 
 import com.fortumo.bahrain.dao.dto.PaymentNotificationDTO;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;

@@ -16,6 +16,8 @@ public class HttpClient {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(request.getServiceURL());
 
+        System.out.println(request.getJsonPayload());
+
         StringEntity entity = new StringEntity(request.getJsonPayload());
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");

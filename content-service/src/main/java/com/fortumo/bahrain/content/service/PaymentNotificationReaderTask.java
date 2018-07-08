@@ -17,7 +17,6 @@ public class PaymentNotificationReaderTask {
     public void start() {
         ScheduledExecutorService execService = Executors.newScheduledThreadPool(5);
         execService.scheduleAtFixedRate(()->{
-            System.out.println("Trigger at:" + new Date().toString());
             try {
                 ContentRequestor.fetchUnprocessedNotifications();
             } catch (Exception e) {

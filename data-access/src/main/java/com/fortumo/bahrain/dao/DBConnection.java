@@ -16,14 +16,14 @@ public class DBConnection {
     private static final String PASS = "newton";
 
     static {
-        // DeleteDbFiles.execute("~", "fortumo", true);
+        DeleteDbFiles.execute("~", "fortumo", true);
     }
 
     public static void createTables() {
         try {
             DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS PaymentNotification ( PaymentNotificationID IDENTITY PRIMARY KEY, MessageID VARCHAR(50) NULL, Operator VARCHAR(50) NULL, Receiver INT NULL, Sender VARCHAR(50) NULL, Text VARCHAR(50) NULL, MsgTime TIMESTAMP NULL, IsProcessed BOOLEAN NULL )");
             DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentRequest ( RequestID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, Keyword VARCHAR(50) NULL, Message VARCHAR(50) NULL )");
-            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentResponse ( ResponseID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, StatusCode INT NULL, ResponseJson VARCHAR(250) NULL, ResponseText VARCHAR(200) NULL, Receiver VARCHAR(50) NULL, Operator VARCHAR(50) NULL, IsDelivered BOOLEAN NULL )");
+            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentResponse ( ResponseID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, StatusCode INT NULL, ResponseText VARCHAR(200) NULL, Receiver VARCHAR(50) NULL, Operator VARCHAR(50) NULL, IsDelivered BOOLEAN NULL )");
         } catch (Exception e) {
 
         }
@@ -50,6 +50,7 @@ public class DBConnection {
         Connection connection = DBConnection.getConnection();
         Statement stmt = null;
         try {
+            System.out.println(sql);
             stmt = connection.createStatement();
             stmt.execute(sql);
             stmt.close();
@@ -70,6 +71,7 @@ public class DBConnection {
     }
 
     public static List<Map<String, Object>> executeQuery(String sql) throws Exception {
+        System.out.println(sql);
         List<Map<String, Object>> result = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         Statement stmt = null;

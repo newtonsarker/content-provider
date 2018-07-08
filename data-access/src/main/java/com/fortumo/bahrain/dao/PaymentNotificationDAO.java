@@ -42,7 +42,7 @@ public class PaymentNotificationDAO {
     }
 
     public static boolean updatePaymentNotification(String messageID) throws Exception {
-        String updateSql = "UPDATE PaymentNotification SET IsProcessed = TRUE WHERE MessageID = '" + messageID + "' )";
+        String updateSql = "UPDATE PaymentNotification SET IsProcessed = TRUE WHERE MessageID = '" + messageID + "' ";
         return DBConnection.executeStatement(updateSql);
     }
 

@@ -2,21 +2,20 @@ package com.fortumo.bahrain.dao.dto;
 
 public class ContentResponseDTO {
 
-    private Integer responseID;
+    private Long responseID;
     private String transactionID;
     private String messageID;
     private Integer statusCode;
-    private String responseJson;
     private String responseText;
     private String receiver;
     private String operator;
     private Boolean isDelivered;
 
-    public Integer getResponseID() {
+    public Long getResponseID() {
         return responseID;
     }
 
-    public void setResponseID(Integer responseID) {
+    public void setResponseID(Long responseID) {
         this.responseID = responseID;
     }
 
@@ -42,14 +41,6 @@ public class ContentResponseDTO {
 
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
-    }
-
-    public String getResponseJson() {
-        return responseJson;
-    }
-
-    public void setResponseJson(String responseJson) {
-        this.responseJson = responseJson;
     }
 
     public String getResponseText() {
