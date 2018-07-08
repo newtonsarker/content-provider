@@ -38,8 +38,8 @@ public class ContentResponseDAO {
         return contents;
     }
 
-    public static boolean updateContentResponse(String messageID, String deliveredMessage) throws Exception {
-        String updateSql = "UPDATE ContentResponse SET IsDelivered = TRUE, DeliveredMessage ='"+ deliveredMessage +"' WHERE MessageID = '" + messageID + "' ";
+    public static boolean updateContentResponse(String transactionID, String deliveredMessage) throws Exception {
+        String updateSql = "UPDATE ContentResponse SET IsDelivered = TRUE, DeliveredMessage ='"+ deliveredMessage +"' WHERE TRANSACTIONID = '" + transactionID + "' ";
         return DBConnection.executeStatement(updateSql);
     }
 

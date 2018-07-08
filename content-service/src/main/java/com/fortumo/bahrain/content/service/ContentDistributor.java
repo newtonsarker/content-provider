@@ -33,7 +33,7 @@ public class ContentDistributor {
             try {
                 HttpResponse response = HttpClient.getUrl(httpRequest);
                 System.out.println("Content Delivery Status: " + response.getStatusCode() + " Text: " + response.getResponseBody());
-                ContentResponseDAO.updateContentResponse(content.getMessageID(), httpRequest.getContentMessage());
+                ContentResponseDAO.updateContentResponse(content.getTransactionID(), httpRequest.getContentMessage());
 
             } catch (Exception e) {
                 e.printStackTrace();
