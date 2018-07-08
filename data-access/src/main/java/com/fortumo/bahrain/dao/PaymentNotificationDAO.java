@@ -1,8 +1,16 @@
 package com.fortumo.bahrain.dao;
 
 import com.fortumo.bahrain.dao.dto.PaymentNotificationDTO;
+import com.fortumo.bahrain.dao.transformers.PaymentNotificationTransformer;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
 
 
 public class PaymentNotificationDAO {
@@ -19,6 +27,23 @@ public class PaymentNotificationDAO {
                 "" + notificationDTO.getProcessed().toString() + "" +
                 ")";
         return DBConnection.executeStatement(insertSql);
+    }
+
+    public static List<PaymentNotificationDTO> retrievePaymentNotificationsToProcess() throws SQLException {
+        List<PaymentNotificationDTO> notifications = null;
+
+        String selectSql = "SELECT MessageID, Operator, Receiver, Sender, Text, MsgTime, IsProcessed FROM PaymentNotification WHERE " +
+                "IsProcessed = " + Boolean.FALSE.toString() + "";
+
+        ResultSet rs = DBConnection.executeQuery(selectSql);
+        if(rs != null) {
+            notifications = new ArrayList<>();
+            while (rs.next()) {
+                notifications.add(PaymentNotificationTransformer.transform(rs));
+            }
+        }
+
+        return notifications;
     }
 
 }

@@ -15,8 +15,8 @@ public class PaymentNotificationReaderTask {
     public void start() {
         ScheduledExecutorService execService = Executors.newScheduledThreadPool(5);
         execService.scheduleAtFixedRate(()->{
-            System.out.println("hi there at: "+ new java.util.Date());
-        }, 5, this.seconds, TimeUnit.SECONDS);
+            ContentDistributor.fetchUnprocessedNotifications();
+        }, 3, this.seconds, TimeUnit.SECONDS);
     }
 
 }
