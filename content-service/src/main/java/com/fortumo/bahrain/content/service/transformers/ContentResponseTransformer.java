@@ -2,8 +2,7 @@ package com.fortumo.bahrain.content.service.transformers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fortumo.bahrain.content.service.http.HttpResponse;
-import com.fortumo.bahrain.content.service.http.RequestMessage;
+import com.fortumo.bahrain.content.service.http.*;
 import com.fortumo.bahrain.dao.dto.ContentResponseDTO;
 
 
@@ -32,4 +31,24 @@ public class ContentResponseTransformer {
         return responseDTO;
     }
 
+    public static HttpRequest transform(ContentResponseDTO content) {
+
+        SmsMessagePayload payload = new SmsMessagePayload();
+        if(200 == content.getStatusCode()  && "this is the reply message content".equalsIgnoreCase(content.getResponseText())) {
+            payload.setMessage("this is the reply message content");
+        } else {
+            payload.setMessage("Something went wrong. Please contact us at s.fortumo.com to receive your service");
+        }
+        payload.setMessageID(content.getMessageID());
+        payload.setReceiver(content.getReceiver());
+        payload.setOperator(content.getOperator());
+
+        HttpRequest message = new HttpRequest();
+        message.setServiceURL("https://bratwurst.fortumo.mobi/sms/send");
+        message.setUsername("fortumo");
+        message.setPassword("topsecret");
+        message.setPayload(payload.toQueryParameter());
+
+        return message;
+    }
 }

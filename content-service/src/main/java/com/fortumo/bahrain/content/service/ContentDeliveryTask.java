@@ -1,15 +1,14 @@
 package com.fortumo.bahrain.content.service;
 
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class PaymentNotificationReaderTask {
+public class ContentDeliveryTask {
 
     int seconds;
 
-    public PaymentNotificationReaderTask(int seconds) {
+    public ContentDeliveryTask(int seconds) {
         this.seconds = seconds;
     }
 
@@ -17,11 +16,11 @@ public class PaymentNotificationReaderTask {
         ScheduledExecutorService execService = Executors.newScheduledThreadPool(5);
         execService.scheduleAtFixedRate(()->{
             try {
-                ContentRequestor.fetchUnprocessedNotifications();
+                ContentDistributor.fetchUnDeliveredContents();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 3, this.seconds, TimeUnit.SECONDS);
+        }, 4, this.seconds, TimeUnit.SECONDS);
     }
 
 }

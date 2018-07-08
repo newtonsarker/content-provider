@@ -6,8 +6,12 @@ public class ContentService {
 
     public static void main(String[] args) {
         DBConnection.createTables();
-        PaymentNotificationReaderTask task = new PaymentNotificationReaderTask(5);
-        task.start();
+
+        PaymentNotificationReaderTask notificationTask = new PaymentNotificationReaderTask(5);
+        notificationTask.start();
+
+        ContentDeliveryTask deliveryTask = new ContentDeliveryTask(6);
+        deliveryTask.start();
     }
 
 }

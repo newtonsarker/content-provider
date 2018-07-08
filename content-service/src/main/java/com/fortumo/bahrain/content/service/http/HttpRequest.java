@@ -3,7 +3,7 @@ package com.fortumo.bahrain.content.service.http;
 public class HttpRequest {
 
     private String serviceURL;
-    private String jsonPayload;
+    private String payload;
     private boolean authRequired = Boolean.FALSE;
     private String username;
     private String password;
@@ -16,12 +16,12 @@ public class HttpRequest {
         this.serviceURL = serviceURL;
     }
 
-    public String getJsonPayload() {
-        return jsonPayload;
+    public String getPayload() {
+        return payload;
     }
 
-    public void setJsonPayload(String jsonPayload) {
-        this.jsonPayload = jsonPayload;
+    public void setPayload(String payload) {
+        this.payload = payload;
     }
 
     public boolean isAuthRequired() {

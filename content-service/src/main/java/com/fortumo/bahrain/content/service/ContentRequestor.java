@@ -43,7 +43,7 @@ public class ContentRequestor {
                 if(ContentRequestDAO.addContentRequest(requestDTO)) {
                     HttpRequest httpRequest = new HttpRequest();
                     httpRequest.setServiceURL(request.getHostUrl());
-                    httpRequest.setJsonPayload(new ObjectMapper().writeValueAsString(request.getPayload()));
+                    httpRequest.setPayload(new ObjectMapper().writeValueAsString(request.getPayload()));
                     HttpResponse response = HttpClient.postJson(httpRequest);
                     ContentResponseDTO responseDTO = ContentResponseTransformer.transform(request, response);
                     ContentResponseDAO.addContentResponse(responseDTO);

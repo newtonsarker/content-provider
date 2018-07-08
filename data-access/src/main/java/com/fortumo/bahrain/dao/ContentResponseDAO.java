@@ -39,7 +39,7 @@ public class ContentResponseDAO {
     }
 
     public static boolean updateContentResponse(String messageID) throws Exception {
-        String updateSql = "UPDATE ContentResponse SET IsDelivered = TRUE WHERE MessageID = '" + messageID + "' )";
+        String updateSql = "UPDATE ContentResponse SET IsDelivered = TRUE WHERE MessageID = '" + messageID + "' ";
         return DBConnection.executeStatement(updateSql);
     }
 
