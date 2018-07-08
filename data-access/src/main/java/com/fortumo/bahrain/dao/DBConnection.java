@@ -3,6 +3,10 @@ package com.fortumo.bahrain.dao;
 import org.h2.tools.DeleteDbFiles;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DBConnection {
 
@@ -12,7 +16,17 @@ public class DBConnection {
     private static final String PASS = "newton";
 
     static {
-        DeleteDbFiles.execute("~", "fortumo", true);
+        // DeleteDbFiles.execute("~", "fortumo", true);
+    }
+
+    public static void createTables() {
+        try {
+            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS PaymentNotification ( PaymentNotificationID IDENTITY PRIMARY KEY, MessageID VARCHAR(50) NULL, Operator VARCHAR(50) NULL, Receiver INT NULL, Sender VARCHAR(50) NULL, Text VARCHAR(50) NULL, MsgTime TIMESTAMP NULL, IsProcessed BOOLEAN NULL )");
+            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentRequest ( RequestID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, Keyword VARCHAR(50) NULL, Message VARCHAR(50) NULL )");
+            DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentResponse ( ResponseID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, StatusCode INT NULL, ResponseJson VARCHAR(250) NULL, ResponseText VARCHAR(200) NULL, Receiver VARCHAR(50) NULL, Operator VARCHAR(50) NULL, IsDelivered BOOLEAN NULL )");
+        } catch (Exception e) {
+
+        }
     }
 
     private static Connection getConnection() {
@@ -31,7 +45,7 @@ public class DBConnection {
         return conn;
     }
 
-    public static boolean executeStatement(String sql) {
+    public static boolean executeStatement(String sql) throws Exception {
         boolean flag = Boolean.FALSE;
         Connection connection = DBConnection.getConnection();
         Statement stmt = null;
@@ -55,14 +69,30 @@ public class DBConnection {
         return flag;
     }
 
-    public static ResultSet executeQuery(String sql) {
-        ResultSet rs = null;
+    public static List<Map<String, Object>> executeQuery(String sql) throws Exception {
+        List<Map<String, Object>> result = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
-            rs = stmt.executeQuery(sql);
-            stmt.close();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs != null) {
+
+                List<String> columnNames = new ArrayList<>();
+                ResultSetMetaData metaData = rs.getMetaData();
+                for (int i = 0; i < metaData.getColumnCount(); i++) {
+                    columnNames.add(metaData.getColumnName(i+1));
+                }
+
+                while (rs.next()) {
+                    Map<String, Object> rowMap = new HashMap<>();
+                    for (String columnName : columnNames) {
+                        rowMap.put(columnName, rs.getObject(columnName));
+                    }
+                    result.add(rowMap);
+                }
+
+            }
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,12 +100,13 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             try {
+                stmt.close();
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return rs;
+        return result;
     }
 
 

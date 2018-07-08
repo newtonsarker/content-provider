@@ -3,20 +3,16 @@ package com.fortumo.bahrain.dao;
 import com.fortumo.bahrain.dao.dto.PaymentNotificationDTO;
 import com.fortumo.bahrain.dao.transformers.PaymentNotificationTransformer;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.Map;
 
 
 public class PaymentNotificationDAO {
 
-    public static boolean addPaymentNotification(PaymentNotificationDTO notificationDTO) {
-        DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS PaymentNotification ( PaymentNotificationID IDENTITY PRIMARY KEY, MessageID VARCHAR(50) NULL, Operator VARCHAR(50) NULL, Receiver INT NULL, Sender VARCHAR(50) NULL, Text VARCHAR(50) NULL, MsgTime TIMESTAMP NULL, IsProcessed BOOLEAN NULL )");
+
+    public static boolean addPaymentNotification(PaymentNotificationDTO notificationDTO) throws Exception {
         String insertSql = "INSERT INTO PaymentNotification (MessageID, Operator, Receiver, Sender, Text, MsgTime, IsProcessed) VALUES (" +
                 "'" + notificationDTO.getMessageID() + "', " +
                 "'" + notificationDTO.getOperator() + "', " +
@@ -29,21 +25,25 @@ public class PaymentNotificationDAO {
         return DBConnection.executeStatement(insertSql);
     }
 
-    public static List<PaymentNotificationDTO> retrievePaymentNotificationsToProcess() throws SQLException {
+    public static List<PaymentNotificationDTO> retrievePaymentNotificationsToProcess() throws Exception {
         List<PaymentNotificationDTO> notifications = null;
 
-        String selectSql = "SELECT MessageID, Operator, Receiver, Sender, Text, MsgTime, IsProcessed FROM PaymentNotification WHERE " +
-                "IsProcessed = " + Boolean.FALSE.toString() + "";
+        String selectSql = "SELECT * FROM PaymentNotification WHERE IsProcessed = FALSE ";
 
-        ResultSet rs = DBConnection.executeQuery(selectSql);
-        if(rs != null) {
+        List<Map<String, Object>> resultSet = DBConnection.executeQuery(selectSql);
+        if(resultSet != null && resultSet.size() > 0) {
             notifications = new ArrayList<>();
-            while (rs.next()) {
-                notifications.add(PaymentNotificationTransformer.transform(rs));
+            for (Map<String, Object> result : resultSet) {
+                notifications.add(PaymentNotificationTransformer.transform(result));
             }
         }
 
         return notifications;
+    }
+
+    public static boolean updatePaymentNotification(String messageID) throws Exception {
+        String updateSql = "UPDATE PaymentNotification SET IsProcessed = TRUE WHERE MessageID = '" + messageID + "' )";
+        return DBConnection.executeStatement(updateSql);
     }
 
 }

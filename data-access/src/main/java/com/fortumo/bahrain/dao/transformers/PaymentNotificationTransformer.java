@@ -4,24 +4,29 @@ import com.fortumo.bahrain.dao.dto.PaymentNotificationDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class PaymentNotificationTransformer {
 
-    public static PaymentNotificationDTO transform(ResultSet rs) throws SQLException {
+    public static PaymentNotificationDTO transform(Map<String, Object> rs) throws Exception {
         PaymentNotificationDTO notifDTO = null;
         if(rs != null) {
             notifDTO = new PaymentNotificationDTO();
-            notifDTO.setPaymentNotificationID(rs.getLong("PaymentNotificationID"));
-            notifDTO.setMessageID(rs.getString("MessageID"));
-            notifDTO.setOperator(rs.getString("Operator"));
-            notifDTO.setReceiver(rs.getInt("Receiver"));
-            notifDTO.setSender(rs.getString("Sender"));
-            notifDTO.setText(rs.getString("Text"));
-            notifDTO.setMsgTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(rs.getTime("MsgTime").getTime()), TimeZone.getDefault().toZoneId()));
-            notifDTO.setProcessed(rs.getBoolean("IsProcessed"));
+            notifDTO.setPaymentNotificationID((Long)rs.get("PaymentNotificationID".toUpperCase()));
+            notifDTO.setMessageID(rs.get("MessageID".toUpperCase()).toString());
+            notifDTO.setOperator(rs.get("Operator".toUpperCase()).toString());
+            notifDTO.setReceiver((Integer)rs.get("Receiver".toUpperCase()));
+            notifDTO.setSender(rs.get("Sender".toUpperCase()).toString());
+            notifDTO.setText(rs.get("Text".toUpperCase()).toString());
+
+            long time = ((Timestamp)rs.get("MsgTime".toUpperCase())).getTime();
+            notifDTO.setMsgTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(time), TimeZone.getDefault().toZoneId()));
+
+            notifDTO.setProcessed((Boolean)rs.get("IsProcessed".toUpperCase()));
         }
         return notifDTO;
     }

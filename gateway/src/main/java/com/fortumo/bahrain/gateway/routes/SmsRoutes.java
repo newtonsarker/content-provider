@@ -13,9 +13,13 @@ public class SmsRoutes {
         PaymentNotification notification;
         try {
             notification = request.getPaymentNotification(exchange);
-            PaymentNotificationDAO.addPaymentNotification(PaymentNotificationTransformer.transform(notification));
-            Exchange.body().sendText(exchange, 200, "OK");
+            if(PaymentNotificationDAO.addPaymentNotification(PaymentNotificationTransformer.transform(notification))){
+                Exchange.body().sendText(exchange, 200, "OK");
+            } else {
+                Exchange.body().sendText(exchange, 500, "Bad Request!");
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             Exchange.body().sendText(exchange, 500, "Bad Request!");
         }
     }

@@ -1,4 +1,4 @@
-package com.fortumo.bahrain.content.service.dto;
+package com.fortumo.bahrain.content.service.http;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

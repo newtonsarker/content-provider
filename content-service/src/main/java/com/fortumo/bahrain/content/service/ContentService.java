@@ -1,9 +1,12 @@
 package com.fortumo.bahrain.content.service;
 
+import com.fortumo.bahrain.dao.DBConnection;
+
 public class ContentService {
 
     public static void main(String[] args) {
-        PaymentNotificationReaderTask task = new PaymentNotificationReaderTask(3);
+        DBConnection.createTables();
+        PaymentNotificationReaderTask task = new PaymentNotificationReaderTask(5);
         task.start();
     }
 
