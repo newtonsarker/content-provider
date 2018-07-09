@@ -1,8 +1,14 @@
 package com.fortumo.bahrain.content.service.http;
 
+import com.fortumo.bahrain.content.service.transformers.ContentResponseTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URLEncoder;
 
 public class SmsMessagePayload {
+
+    private static final Logger logger = LoggerFactory.getLogger(SmsMessagePayload.class);
 
     private String message;
     private String messageID;
@@ -45,7 +51,7 @@ public class SmsMessagePayload {
         try {
             return "message=" + URLEncoder.encode(message, "UTF-8") + "&mo_message_id=" + messageID + "&receiver=" + receiver + "&operator=" + operator;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("UTF-8 encoding failed", e);
         }
         return "";
     }

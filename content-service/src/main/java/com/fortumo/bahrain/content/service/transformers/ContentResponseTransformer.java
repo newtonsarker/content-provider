@@ -2,11 +2,16 @@ package com.fortumo.bahrain.content.service.transformers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fortumo.bahrain.content.service.ContentDeliveryTask;
 import com.fortumo.bahrain.content.service.http.*;
 import com.fortumo.bahrain.dao.dto.ContentResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class ContentResponseTransformer {
+
+    private static final Logger logger = LoggerFactory.getLogger(ContentResponseTransformer.class);
 
     public static ContentResponseDTO transform(RequestMessage requestMessage, HttpResponse response) throws Exception {
         ContentResponseDTO responseDTO = new ContentResponseDTO();
@@ -21,7 +26,7 @@ public class ContentResponseTransformer {
                 responseDTO.setResponseText(responseNode.get("reply_message").asText());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed ot parse bad json", e);
         }
 
         responseDTO.setReceiver(requestMessage.getPayload().getSender());
