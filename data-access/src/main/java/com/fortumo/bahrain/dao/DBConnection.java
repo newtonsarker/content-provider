@@ -41,7 +41,7 @@ public class DBConnection {
             logger.error("Could not load JDBC Driver " + JDBC_DRIVER, e);
         }
         try {
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             logger.error("Failed create database connection to H2 database " + DB_URL, e);

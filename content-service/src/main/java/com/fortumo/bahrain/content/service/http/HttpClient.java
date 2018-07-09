@@ -1,5 +1,6 @@
 package com.fortumo.bahrain.content.service.http;
 
+import com.fortumo.bahrain.dao.DBConnection;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
 import org.apache.http.auth.AuthScope;
@@ -14,17 +15,22 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
 
 public class HttpClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(HttpClient.class);
+
     public static HttpResponse postJson(HttpRequest request) throws Exception {
+        logger.info("Posting to service ", request.getServiceURL());
+        logger.info("Payload: \n" + request.getPayload());
+
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(request.getServiceURL());
-
-        System.out.println(request.getPayload());
 
         StringEntity entity = new StringEntity(request.getPayload());
         httpPost.setEntity(entity);
@@ -42,6 +48,9 @@ public class HttpClient {
 
     public static HttpResponse getUrl(HttpRequest request) throws Exception {
         String url = request.getServiceURL() + "?" + request.getPayload();
+
+        logger.info("Get to service ", request.getServiceURL());
+        logger.info("Payload: \n" + request.getPayload());
 
         String header = "Basic ";
         String headerValue = request.getUsername() + ":" + request.getPassword();

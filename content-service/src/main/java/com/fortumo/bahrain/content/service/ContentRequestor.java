@@ -13,12 +13,16 @@ import com.fortumo.bahrain.dao.PaymentNotificationDAO;
 import com.fortumo.bahrain.dao.dto.ContentRequestDTO;
 import com.fortumo.bahrain.dao.dto.ContentResponseDTO;
 import com.fortumo.bahrain.dao.dto.PaymentNotificationDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ContentRequestor {
+
+    private static final Logger logger = LoggerFactory.getLogger(ContentRequestor.class);
 
     public static void fetchUnprocessedNotifications() throws Exception {
         List<PaymentNotificationDTO> notifications = PaymentNotificationDAO.retrievePaymentNotificationsToProcess();
@@ -27,7 +31,7 @@ public class ContentRequestor {
                 try {
                     ContentRequestor.forwardNotification(notificaiton);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("Failed to forward notification", e);
                 }
             });
         }
@@ -50,7 +54,7 @@ public class ContentRequestor {
                     PaymentNotificationDAO.updatePaymentNotification(requestDTO.getMessageID());
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Failed to forward notification", e);
             }
 
         });
