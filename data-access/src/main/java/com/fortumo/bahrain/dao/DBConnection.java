@@ -15,7 +15,7 @@ public class DBConnection {
     private static final Logger logger = LoggerFactory.getLogger(DBConnection.class);
 
     private static final String JDBC_DRIVER = "org.h2.Driver";
-    private static final String DB_URL = "jdbc:h2:~/fortumo;AUTO_SERVER=TRUE";
+    private static final String DB_URL = "jdbc:h2:./fortumo;AUTO_SERVER=TRUE";
     private static final String USER = "newton";
     private static final String PASS = "newton";
 
