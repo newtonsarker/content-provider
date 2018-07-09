@@ -58,4 +58,16 @@ public class PaymentNotification {
     public void setMsgTime(LocalDateTime msgTime) {
         this.msgTime = msgTime;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentNotification{" +
+                "messageID='" + messageID + '\'' +
+                ", operator='" + operator + '\'' +
+                ", receiver=" + receiver +
+                ", sender='" + sender + '\'' +
+                ", text='" + text + '\'' +
+                ", msgTime=" + msgTime +
+                '}';
+    }
 }

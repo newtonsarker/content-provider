@@ -74,4 +74,19 @@ public class ContentResponseDTO {
     public void setDelivered(Boolean delivered) {
         isDelivered = delivered;
     }
+
+    @Override
+    public String toString() {
+        return "ContentResponseDTO{" +
+                "responseID=" + responseID +
+                ", transactionID='" + transactionID + '\'' +
+                ", messageID='" + messageID + '\'' +
+                ", statusCode=" + statusCode +
+                ", responseText='" + responseText + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", operator='" + operator + '\'' +
+                ", isDelivered=" + isDelivered +
+                '}';
+    }
+
 }

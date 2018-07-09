@@ -1,6 +1,8 @@
 package com.fortumo.bahrain.dao;
 
 import org.h2.tools.DeleteDbFiles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class DBConnection {
+
+    private static final Logger logger = LoggerFactory.getLogger(DBConnection.class);
 
     private static final String JDBC_DRIVER = "org.h2.Driver";
     private static final String DB_URL = "jdbc:h2:~/fortumo;AUTO_SERVER=TRUE";
@@ -25,7 +29,7 @@ public class DBConnection {
             DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentRequest ( RequestID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, Keyword VARCHAR(50) NULL, Message VARCHAR(50) NULL )");
             DBConnection.executeStatement("CREATE TABLE IF NOT EXISTS ContentResponse ( ResponseID IDENTITY PRIMARY KEY, TransactionID VARCHAR(50) NULL, MessageID VARCHAR(50) NULL, StatusCode INT NULL, ResponseText VARCHAR(200) NULL, Receiver VARCHAR(50) NULL, Operator VARCHAR(50) NULL, IsDelivered BOOLEAN NULL, DeliveredMessage VARCHAR(200) NULL )");
         } catch (Exception e) {
-
+            logger.error("Failed to create tables!", e);
         }
     }
 
@@ -34,44 +38,42 @@ public class DBConnection {
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Could not load JDBC Driver " + JDBC_DRIVER, e);
         }
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             conn.setAutoCommit(false);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed create database connection to H2 database " + DB_URL, e);
         }
         return conn;
     }
 
     public static boolean executeStatement(String sql) throws Exception {
+        logger.info("Executing sql: " + sql);
         boolean flag = Boolean.FALSE;
         Connection connection = DBConnection.getConnection();
         Statement stmt = null;
         try {
-            System.out.println(sql);
             stmt = connection.createStatement();
             stmt.execute(sql);
             stmt.close();
             connection.commit();
             flag = Boolean.TRUE;
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to execute statement - " + sql, e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Failed to close database connection", e);
             }
         }
         return flag;
     }
 
     public static List<Map<String, Object>> executeQuery(String sql) throws Exception {
-        System.out.println(sql);
+        logger.info("Executing sql: " + sql);
         List<Map<String, Object>> result = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         Statement stmt = null;
@@ -96,16 +98,14 @@ public class DBConnection {
 
             }
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to execute query - " + sql, e);
         } finally {
             try {
                 stmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Failed to close database connection", e);
             }
         }
         return result;

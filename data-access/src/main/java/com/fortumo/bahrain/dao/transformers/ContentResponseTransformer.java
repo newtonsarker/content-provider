@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ContentResponseTransformer {
 
-    public static ContentResponseDTO transform(Map<String, Object> rs) {
+    public static ContentResponseDTO transform(Map<String, Object> rs) throws Exception {
         ContentResponseDTO responseDTO = null;
         if(rs != null) {
             responseDTO = new ContentResponseDTO();

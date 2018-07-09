@@ -47,4 +47,15 @@ public class ContentRequestDTO {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "ContentRequestDTO{" +
+                "requestID=" + requestID +
+                ", transactionID='" + transactionID + '\'' +
+                ", messageID='" + messageID + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

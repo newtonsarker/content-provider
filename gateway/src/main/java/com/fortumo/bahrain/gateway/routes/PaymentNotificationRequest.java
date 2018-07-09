@@ -39,6 +39,9 @@ public class PaymentNotificationRequest {
         notification.setSender(this.sender(exchange));
         notification.setText(this.text(exchange));
         notification.setMsgTime(this.msgTime(exchange));
+
+
+
         return notification;
     }
 }

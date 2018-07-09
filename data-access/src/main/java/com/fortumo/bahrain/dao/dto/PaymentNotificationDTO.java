@@ -77,4 +77,17 @@ public class PaymentNotificationDTO {
         isProcessed = processed;
     }
 
+    @Override
+    public String toString() {
+        return "PaymentNotificationDTO{" +
+                "paymentNotificationID=" + paymentNotificationID +
+                ", messageID='" + messageID + '\'' +
+                ", operator='" + operator + '\'' +
+                ", receiver=" + receiver +
+                ", sender='" + sender + '\'' +
+                ", text='" + text + '\'' +
+                ", msgTime=" + msgTime +
+                ", isProcessed=" + isProcessed +
+                '}';
+    }
 }

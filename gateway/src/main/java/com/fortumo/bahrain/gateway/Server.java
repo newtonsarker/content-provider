@@ -3,13 +3,26 @@ package com.fortumo.bahrain.gateway;
 import com.fortumo.bahrain.dao.DBConnection;
 import com.fortumo.bahrain.gateway.handlers.RequestHandler;
 import com.fortumo.bahrain.gateway.http.RestServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.Struct;
+import java.util.Date;
 
 public class Server {
 
-    // localhost:6000/api/v1/sms?message_id=e39ce00e-f8b5-4b0b-96ce-d68f94525704&operator=Etisalat&receiver=13011&sender=%2B37255555555&text=TXT+COINS&timestamp=2017-11-03+12%3A32%3A13
+    private static final Logger logger = LoggerFactory.getLogger(Server.class);
+
     public static void main(String[] args) {
+        logger.info("Gateway started at " + new Date().toString());
+
         DBConnection.createTables();
-        RestServer.build("0.0.0.0", 6000, RequestHandler.getSmsHandler()).start();
+
+        String host = "0.0.0.0";
+        Integer port = 6000;
+        RestServer.build(host, port, RequestHandler.getSmsHandler()).start();
+
+        logger.info("Listening to " + host + ":" + port);
     }
 
 }
