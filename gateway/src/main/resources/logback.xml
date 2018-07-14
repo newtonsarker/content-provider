@@ -22,7 +22,7 @@
     </appender>
 
 
-    <logger name="com.mkyong.helloworld" level="debug" additivity="false">
+    <logger name="com.fortumo.bahrain.gateway" level="debug" additivity="false">
         <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />
     </logger>
